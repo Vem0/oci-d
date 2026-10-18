@@ -32,8 +32,8 @@ if not public_ssh_key or public_ssh_key.strip() == "":
     print("CRITICAL ERROR: OCI_PUBLIC_SSH_KEY is empty or missing from your secrets!")
     exit(1)
 
-# Availability Domains to cycle through
-ads = ["uufj:PHX-AD-1", "uufj:PHX-AD-2", "uufj:PHX-AD-3"]
+# Availability Domains to cycle through (исправлено на стандартные имена для PHX)
+ads = ["PHX-AD-1", "PHX-AD-2", "PHX-AD-3"]
 
 total_attempts = 60 
 
@@ -54,7 +54,7 @@ for i in range(1, total_attempts + 1):
             source_details=oci.core.models.InstanceSourceViaImageDetails(
                 source_type="image",
                 image_id=image_id,
-                boot_volume_size_in_gbs=100
+                boot_volume_size_in_gbs=50  # Уменьшено до 50 ГБ во избежание лимитов Always Free
             ),
             create_vnic_details=oci.core.models.CreateVnicDetails(
                 subnet_id=subnet_id,
