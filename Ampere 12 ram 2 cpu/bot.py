@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Setup configuration from environment variables
+# Setup configuration from environment variables with .strip() to avoid \n errors
 config = {
-    "user": os.getenv("OCI_USER_ID"),
-    "key_content": os.getenv("OCI_PRIVATE_KEY"),
-    "fingerprint": os.getenv("OCI_FINGERPRINT"),
-    "tenancy": os.getenv("OCI_TENANCY_ID"),
-    "region": os.getenv("OCI_REGION")
+    "user": os.getenv("OCI_USER_ID", "").strip(),
+    "key_content": os.getenv("OCI_PRIVATE_KEY", "").strip(),
+    "fingerprint": os.getenv("OCI_FINGERPRINT", "").strip(),
+    "tenancy": os.getenv("OCI_TENANCY_ID", "").strip(),
+    "region": os.getenv("OCI_REGION", "").strip()
 }
 
 try:
@@ -22,10 +22,10 @@ except Exception as e:
     exit(1)
 
 # Execution parameters
-compartment_id = os.getenv("OCI_TENANCY_ID")
-subnet_id = os.getenv("OCI_SUBNET_ID")
-image_id = os.getenv("OCI_IMAGE_ID")
-public_ssh_key = os.getenv("OCI_PUBLIC_SSH_KEY") 
+compartment_id = os.getenv("OCI_TENANCY_ID", "").strip()
+subnet_id = os.getenv("OCI_SUBNET_ID", "").strip()
+image_id = os.getenv("OCI_IMAGE_ID", "").strip()
+public_ssh_key = os.getenv("OCI_PUBLIC_SSH_KEY", "") 
 
 # SAFETY CHECK: Verify the key actually loaded from GitHub Secrets
 if not public_ssh_key or public_ssh_key.strip() == "":
